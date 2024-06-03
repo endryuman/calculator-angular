@@ -1,0 +1,68 @@
+<div class="calculator">
+  <h2>Calculator</h2>
+  <ng-container *ngFor="let group of calcGroups; let i = index"
+    ><div>
+      <select [(ngModel)]="group.first.modificator">
+        <option
+          [value]="modificator.value"
+          *ngFor="let modificator of calcModifiers | keyvalue"
+        >
+          {{ modificator.value }}
+        </option>
+      </select>
+      <input
+        type="number"
+        class="calculator_input"
+        [(ngModel)]="group.first.value"
+      />
+      <select [(ngModel)]="group.operation">
+        <option
+          [value]="operation.value"
+          *ngFor="let operation of calcOperations | keyvalue"
+        >
+          {{ operation.value }}
+        </option>
+      </select>
+      <select [(ngModel)]="group.second.modificator">
+        <option
+          [value]="modificator.value"
+          *ngFor="let modificator of calcModifiers | keyvalue"
+        >
+          {{ modificator.value }}
+        </option>
+      </select>
+      <input
+        type="number"
+        class="calculator_input"
+        [(ngModel)]="group.second.value"
+      />
+      <button *ngIf="i !== 0" (click)="removeGroup(i)">Delete group</button>
+    </div>
+
+    <select
+      [(ngModel)]="operationsBetweenGroups[i]"
+      *ngIf="operationsBetweenGroups.length > i"
+    >
+      <option
+        [value]="operation.value"
+        *ngFor="let operation of calcOperations | keyvalue"
+      >
+        {{ operation.value }}
+      </option>
+    </select>
+  </ng-container>
+
+  <span class="calculator_result">{{ result ? result : "Press count" }}</span>
+
+  <div>
+    <span>Operations history</span><br />
+    <span *ngFor="let obj of history; let i = index"
+      >{{ i + 1 }}{{ obj }} <br
+    /></span>
+  </div>
+
+  <div>
+    <button (click)="calcGroup()">Count</button>
+    <button (click)="addGroup()">Add group</button>
+  </div>
+</div>
